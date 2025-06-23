@@ -3,7 +3,7 @@ v: 3
 
 title: Ephemeral Diffie-Hellman Over COSE (EDHOC) and Object Security for Constrained Environments (OSCORE) Profile for Authentication and Authorization for Constrained Environments (ACE)
 abbrev: EDHOC and OSCORE profile of ACE
-docname: draft-spm-lake-pqsuite-latest
+docname: draft-spm-lake-pqsuites-latest
 category: std
 submissiontype: IETF
 
