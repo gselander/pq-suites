@@ -1,8 +1,8 @@
 ---
 v: 3
 
-title: Post-Quantum Cipher Suites for EDHOC
-abbrev: PQ-suites for EDHOC
+title: Quantum-Resistant Cipher Suites for EDHOC
+abbrev: EDHOC PQC
 docname: draft-spm-lake-pqsuites-latest
 category: std
 submissiontype: IETF
@@ -32,29 +32,49 @@ author:
 normative:
   RFC2119:
   RFC9528:
+  I-D.ietf-cose-dilithium:
+  I-D.ietf-jose-pqc-kem:
 
 informative:
   I-D.ietf-lake-edhoc-psk:
+  FIPS203:
+    target: https://doi.org/10.6028/NIST.FIPS.203
+    title: Module-Lattice-Based Key-Encapsulation Mechanism Standard
+    seriesinfo:
+      "NIST": "FIPS 203"
+    author:
+    date: August 2024
+  FIPS204:
+    target: https://doi.org/10.6028/NIST.FIPS.204
+    title: Module-Lattice-Based Digital Signature Standard
+    seriesinfo:
+      "NIST": "FIPS 204"
+    author:
+    date: August 2024
 
 entity:
   SELF: "[RFC-XXXX]"
 
 --- abstract
 
-The lightweight authenticated key exchange Ephemeral Diffie-Hellman over COSE (EDHOC) may be used with quantum safe algorithms, for example the ML-DSA signature algorithm. To take full advantage of post-quantum security, new cipher suites are needed. This document describes how EDHOC can be used in the post-quantum setting and specifies new cipher suites.
+The Lightweight Authenticated Key Exchange (LAKE) protocol, Ephemeral Diffie-Hellman over COSE (EDHOC), can trivally be extended to support quantum-resistant algorithms such as ML-KEM for key exchange and ML-DSA for digital signatures. To achieve post-quantum security, new cipher suites are required. This document specifies how EDHOC can operate in a post-quantum setting using both signature-based and PSK-based authentication methods, and defines the corresponding cipher suites.
 
 --- middle
 
 
 # Introduction
 
-Ephemeral Diffie-Hellman over COSE (EDHOC) {{RFC9528}} allows the specification of different authentication methods. Currently there are four public-key based algorithms (0, 1, 2, 3), and one symmetric-key based authentication method is being proposed {{I-D.ietf-lake-edhoc-psk}} here called "the PSK method".
+The Lightweight Authenticated Key Exchange (LAKE) protocol, Ephemeral Diffie-Hellman over COSE (EDHOC) {{RFC9528}}, supports the use of multiple authentication methods and the negotiation of cipher suites based on COSE algorithms. Currently, four asymmetric authentication methods (0, 1, 2, and 3) are defined. In addition, a symmetric key-based authentication method is being developed in {{I-D.ietf-lake-edhoc-psk}}.
 
-Method 0, when both Initiator and Responder authenticate using digital signatures, can be directly applied with a post-quantum signature algorithm such as the Module-Lattice-Based Digital Signature Standard (ML-DSA) [FIPS204]. The PSK method is also applicable in the post-quantum setting.
+The cipher suites defined in {{RFC9528}} rely on Elliptic Curve Cryptography (ECC) for key exchange and authentication, making them vulnerable in the event that a Cryptographically Relevant Quantum Computer (CRQC) is realized. In contrast, symmetric-key authentication in the PSK method is not practically affected by such an adversary.
 
-Methods 1-3 are based on the static Diffie-Hellman keys, for which there are currently no post-quantum substitutes. Alternatively, new EDHOC methods based on a Key-Encapsulation Method (KEM) can be specified.
+Method 0 in {{RFC9528}}, which uses digital signatures for authentication by both the Initiator and Responder, and the PSK method in {{I-D.ietf-lake-edhoc-psk}}, can be trivally be used with standardized post-quantum algorithms. In particular, ML-KEM {{I-D.ietf-jose-pqc-kem}} can be used for key exchange, and ML-DSA {{I-D.ietf-cose-dilithium}} for digital signatures. To enable post-quantum security in EDHOC, new cipher suites are required.
 
-Method 0 with a post-quantum signature or the PSK method, when deployed with ephemeral Elliptic Curve Diffie-Hellman keys, does not provide post-quantum perfect forward secrecy and identity protection. Instead, a quantum safe KEM method such as the Module-Lattice-Based Key-Encapsulation Mechanism (ML-KEM) [FIPS203] can be used. For this reason, new cipher suites needs to be defined, see {{suites-registry}}.
+This document specifies how EDHOC can operate in a post-quantum setting using both signature-based and PSK-based authentication, and defines the corresponding cipher suites. Specifically, it introduces cipher suites using ML-KEM-512 {{I-D.ietf-jose-pqc-kem}} for key exchange and ML-DSA-44 {{I-D.ietf-cose-dilithium}} for digital signatures; see {{suites-registry}}. As both ML-KEM {{FIPS203}} and ML-DSA {{FIPS204}} internally use SHAKE256, it is natural to also use SHAKE256 for EDHOC's key derivation.
+
+When ML-KEM-512 is used in EDHOC, the ephemeral ML-KEM public key is transported in the G_X field, and the ML-KEM ciphertext is transported in the G_Y field, which is no longer a public key. Compared to elliptic curve algorithms such as ECDHE, ECDSA, and EdDSA, ML-KEM-512 and ML-DSA-44 introduce significantly higher overhead {{FIPS203}}{{FIPS204}}. In the future, more efficient post-quantum signature schemes such as FN-DSA and MAYO may be considered, but these are not standardized at the time of this document’s publication.
+
+Methods 1–3 in {{RFC9528}} use a Diffie-Hellman-based API for authentication. As of this writing, no standardized post-quantum alternatives for these methods exist. An alternative path to post-quantum EDHOC, not pursued in this document, would be to define new authentication methods based on Key Encapsulation Mechanisms (KEMs).
 
 ## Terminology # {#terminology}
 
@@ -64,7 +84,7 @@ Readers are expected to be familiar with EDHOC {{RFC9528}}.
 
 # Security Considerations
 
-TBD
+The cipher suites defined in {{RFC9528}} rely on Elliptic Curve Cryptography (ECC) for key exchange and authentication, which would be broken by a Cryptographically Relevant Quantum Computer (CRQC). In contrast, the cipher suites specified in this document use the quantum-resistant algorithms ML-KEM for key exchange and ML-DSA for authentication. When used with Method 0 from {{RFC9528}}, where both the Initiator and Responder authenticate using digital signatures, or with the PSK method defined in {{I-D.ietf-lake-edhoc-psk}}, these cipher suites preserve the same security properties even in the presence of a quantum-capable adversary.
 
 # Privacy Considerations
 
@@ -80,16 +100,16 @@ IANA is requested to register the following entries in the EDHOC Cipher Suites R
 ~~~~~~~~~~~~~~~~~~~~~~~
 Value: TBD1
 Array: 30, -45, 16, TBD3, -48, 10, -16
-Description: AES-CCM-16-128-128, SHAKE‑256, 16, ML-KEM-512, ML-DSA-44,
-AES-CCM-16-64-128, SHA-256
+Description: AES-CCM-16-128-128, SHAKE256, 16, MLKEM512, ML-DSA-44,
+             AES-CCM-16-64-128, SHA-256
 Reference: SELF
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 ~~~~~~~~~~~~~~~~~~~~~~~
 Value: TBD2
 Array: 3, -45, 16, TBD3, -48, 30, -16
-Description: A256GCM, SHAKE-256, 16, ML-KEM-512, ML-DSA-44,
-A256GCM, SHA-256
+Description: A256GCM, SHAKE256, 16, MLKEM512, ML-DSA-44,
+             A256GCM, SHA-256
 Reference: SELF
 ~~~~~~~~~~~~~~~~~~~~~~~
 
