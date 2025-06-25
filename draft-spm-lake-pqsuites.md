@@ -38,7 +38,7 @@ normative:
 informative:
   I-D.ietf-lake-edhoc-psk:
   I-D.connolly-cfrg-xwing-kem:
-  I-D.fluhrer-cfrg-ml-kem-security-considerations:
+  I-D.sfluhrer-cfrg-ml-kem-security-considerations:
   FIPS203:
     target: https://doi.org/10.6028/NIST.FIPS.203
     title: Module-Lattice-Based Key-Encapsulation Mechanism Standard
@@ -109,7 +109,7 @@ Cipher suites using ML-KEM-512 {{I-D.ietf-jose-pqc-kem}} for key exchange and ML
 
 The cipher suites defined in {{RFC9528}} rely on Elliptic Curve Cryptography (ECC) for key exchange and authentication, which would be broken by a Cryptographically Relevant Quantum Computer (CRQC). In contrast, the cipher suites specified in this document use the quantum-resistant algorithms ML-KEM for key exchange and ML-DSA for authentication. When used with Method 0 from {{RFC9528}}, where both the Initiator and Responder authenticate using digital signatures, or with the PSK method defined in {{I-D.ietf-lake-edhoc-psk}}, these cipher suites preserve the same security properties even in the presence of a quantum-capable adversary.
 
-Security considerations of ML-KEM are discussed in {{I-D.fluhrer-cfrg-ml-kem-security-considerations}}.
+Security considerations of ML-KEM are discussed in {{I-D.sfluhrer-cfrg-ml-kem-security-considerations}}.
 
 # Privacy Considerations
 
