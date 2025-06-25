@@ -91,17 +91,25 @@ Methods 1–3 in {{RFC9528}} use a Diffie-Hellman/Non-Interactive Key Exchange (
 
 ## Using KEMs for EDHOC Key Exchange {#KEM}
 
-Given a quantum-resistant KEM, such as ML-KEM-512, with encapsulation key ek, ciphertext c and shared secret key K (using the notation of {{FIPS203}}), EDHOC is applied as follows:
+Given a quantum-resistant KEM, such as ML-KEM-512, with encapsulation key ek, ciphertext c, and shared secret key K (using the notation of {{FIPS203}}). The Diffie-Hellman procedure in EDHOC is replaced by a KEM procedure as follows:
 
-* The encapsulation key ek is transported in the G_X field.
-* The ciphertext c is is transported in the G_Y field.
+* The Initiator generates a new encapsulation / decapsulation key pair matching the selected cipher suite.
+
+* The encapsulation key ek is transported in the G_X field in message_1.
+
+* The Responder calculates (K,c) = Encaps(ek).
+
+* The ciphertext c is transported in the G_Y field in message_2.
+
+* The Initiator calculates the shared secret K = Decaps(c).
+
 * G_XY is the shared secret key K.
 
 Note that G_Y does not contain a public key when a KEM is used in this way.
 
-The security requirements and security considerations of EDHOC and the KEM algorithm used apply. For example, the Initiator MUST generate a new encapsulation / decapsulation key pair matching the selected cipher suite for each EDHOC session.
+The security requirements and security considerations of EDHOC and the KEM algorithm used apply. For example, the Initiator MUST generate a new encapsulation / decapsulation key pair for each EDHOC session.
 
-Conventions for using post-quantum KEMs within COSE are described in {{I-D.ietf-jose-pqc-kem}}.
+Conventions for using post-quantum KEMs within COSE are described in {{I-D.ietf-jose-pqc-kem}}. Note that K corresponds to the initial shared secret SS' in that document.
 
 Note that this use of KEM applies both to standalone KEM and hybrid KEMs such as, e.g., X-wing {{I-D.connolly-cfrg-xwing-kem}}.
 
