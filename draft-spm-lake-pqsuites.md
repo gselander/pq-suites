@@ -129,15 +129,32 @@ TBD
 
 # IANA Considerations
 
+## EDHOC Method Type Registry
+
+IANA is requested to updated the EDHOC Method Type registry with a column with heading "Requires DH/NIKE" indicating that the method requires Diffie-Hellman or Non-Interactive Key Exchange. Valid table entries in this column are "Yes" and "No".
+
+For the existing Method Types, the following entries are inserted in the new "Requires DH/NIKE" column:
+~~~~~~~~~~~~~~~~~~~~~~~
+Value: 0, Requires DH/NIKE: No
+Value: 1, Requires DH/NIKE: Yes
+Value: 2, Requires DH/NIKE: Yes
+Value: 3, Requires DH/NIKE: Yes
+~~~~~~~~~~~~~~~~~~~~~~~
+
 ## EDHOC Cipher Suites Registry {#suites-registry}
 
-IANA is requested to register the following entries in the EDHOC Cipher Suites Registry:
+IANA is requested to update the EDHOC Cipher Suites registry with a column with heading "Supports DH/NIKE" indicating that the cipher suite supports Diffie-Hellman or Non-Interactive Key Exchange. Valid table entries in this column are "Yes" and "No".
+
+For the existing EDHOC Cipher Suites, 0-6, 24, 25, entry "Yes" is inserted in the new "Supports DH/NIKE" column.
+
+Furthermore, IANA is requested to register the following entries in the EDHOC Cipher Suites Registry:
 
 ~~~~~~~~~~~~~~~~~~~~~~~
 Value: TBD1
 Array: 30, -45, 16, TBD3, -48, 10, -16
 Description: AES-CCM-16-128-128, SHAKE256, 16, MLKEM512, ML-DSA-44,
              AES-CCM-16-64-128, SHA-256
+Supports DH/NIKE: No
 Reference: SELF
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -146,6 +163,7 @@ Value: TBD2
 Array: 3, -45, 16, TBD3, -48, 30, -16
 Description: A256GCM, SHAKE256, 16, MLKEM512, ML-DSA-44,
              A256GCM, SHA-256
+Supports DH/NIKE: No
 Reference: SELF
 ~~~~~~~~~~~~~~~~~~~~~~~
 
