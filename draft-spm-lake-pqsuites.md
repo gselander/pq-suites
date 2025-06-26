@@ -81,7 +81,7 @@ Readers are expected to be familiar with EDHOC {{RFC9528}}.
 
 # EDHOC with Quantum-Resistant Algorithms
 
-Method 0 in {{RFC9528}}, which uses digital signatures for authentication by both the Initiator and Responder, and also the PSK method in {{I-D.ietf-lake-edhoc-psk}}, can trivally be used with standardized post-quantum algorithms.
+Method 0 in {{RFC9528}}, which uses digital signatures for authentication by both the Initiator and Responder, and also the PSK method in {{I-D.ietf-lake-edhoc-psk}}, can trivially be used with standardized post-quantum algorithms.
 
 A quantum-resistant signature algorithm, such as ML-DSA {{I-D.ietf-cose-dilithium}}, is a drop-in replacement for classical signature algorithms such as ECDSA. For post-quantum secure key exchange, a quantum-resistant Key Encapsulation Mechanism (KEM), such as ML-KEM {{I-D.ietf-jose-pqc-kem}}, can be applied directly to EDHOC, as is detailed in {{KEM}}.
 
@@ -131,7 +131,7 @@ TBD
 
 ## EDHOC Method Type Registry
 
-IANA is requested to updated the EDHOC Method Type registry with a column with heading "Requires DH/NIKE" indicating that the method requires Diffie-Hellman or Non-Interactive Key Exchange. Valid table entries in this column are "Yes" and "No".
+IANA is requested to update the EDHOC Method Type registry with a column with heading "Requires DH/NIKE" indicating that the method requires Diffie-Hellman or Non-Interactive Key Exchange. Valid table entries in this column are "Yes" and "No".
 
 For the existing Method Types, the following entries are inserted in the new "Requires DH/NIKE" column:
 ~~~~~~~~~~~~~~~~~~~~~~~
