@@ -54,8 +54,6 @@ informative:
     author:
     date: August 2024
 
-entity:
-  SELF: "[RFC-XXXX]"
 
 --- abstract
 
@@ -155,7 +153,7 @@ Array: 30, -45, 16, TBD3, -48, 10, -16
 Description: AES-CCM-16-128-128, SHAKE256, 16, MLKEM512, ML-DSA-44,
              AES-CCM-16-64-128, SHA-256
 Supports DH/NIKE: No
-Reference: SELF
+Reference: [[This document]]
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -164,7 +162,7 @@ Array: 3, -45, 16, TBD3, -48, 30, -16
 Description: A256GCM, SHAKE256, 16, MLKEM512, ML-DSA-44,
              A256GCM, SHA-256
 Supports DH/NIKE: No
-Reference: SELF
+Reference: [[This document]]
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 --- back
