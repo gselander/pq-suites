@@ -83,7 +83,7 @@ Method 0 in {{RFC9528}}, which uses digital signatures for authentication by bot
 
 A quantum-resistant signature algorithm, such as ML-DSA {{I-D.ietf-cose-dilithium}}, is a drop-in replacement for classical signature algorithms such as ECDSA. For post-quantum secure key exchange, a quantum-resistant Key Encapsulation Mechanism (KEM), such as ML-KEM {{I-D.ietf-jose-pqc-kem}}, can be applied directly to EDHOC, as is detailed in {{KEM}}.
 
-To enable post-quantum security in EDHOC it suffices to register new cipher suites using COSE registered algorithms, see {{suites-registry}}.  Further post-quantum cipher suites may be added in the future.
+To enable post-quantum security in EDHOC it suffices to register new cipher suites using COSE registered algorithms, see {{suites-registry}}.  Additional post-quantum cipher suites may be specified.
 
 Methods 1–3 in {{RFC9528}} use a Diffie-Hellman/Non-Interactive Key Exchange (NIKE) based API for authentication. As of this writing, no standardized post-quantum algorithms for these methods exist. An alternative path to post-quantum EDHOC, not pursued in this document, would be to define new authentication methods based on Key Encapsulation Mechanisms (KEMs).
 
