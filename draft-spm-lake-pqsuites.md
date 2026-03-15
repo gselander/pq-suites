@@ -7,6 +7,10 @@ docname: draft-spm-lake-pqsuites-latest
 category: std
 submissiontype: IETF
 
+v3xml2rfc:
+  silence:
+  - Found SVG with width or height specified
+
 ipr: trust200902
 area: Security
 workgroup: LAKE Working Group
@@ -16,6 +20,13 @@ stand_alone: yes
 pi: [toc, sortrefs, symrefs]
 
 coding: utf-8
+
+venue:
+  group: "Lightweight Authenticated Key Exchange"
+  type: "Working Group"
+  mail: "lake@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/lake/"
+  github: "gselander/pq-suites"
 
 author:
 -
