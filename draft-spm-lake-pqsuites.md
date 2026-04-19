@@ -182,7 +182,7 @@ Furthermore, IANA is requested to register the following entries in the EDHOC Ci
 
 ~~~~~~~~~~~~~~~~~~~~~~~
 Value: TBD1
-Array: 30, -45, 16, TBD3, -48, 10, -16
+Array: 30, -45, 16, TBD10, -48, 10, -16
 Description: AES-CCM-16-128-128, SHAKE256, 16, MLKEM512, ML-DSA-44,
              AES-CCM-16-64-128, SHA-256
 Supports DH/NIKE: No
@@ -191,12 +191,24 @@ Reference: [[This document]]
 
 ~~~~~~~~~~~~~~~~~~~~~~~
 Value: TBD2
-Array: 3, -45, 16, TBD3, -48, 30, -16
+Array: 3, -45, 16, TBD10, -48, 3, -16
 Description: A256GCM, SHAKE256, 16, MLKEM512, ML-DSA-44,
              A256GCM, SHA-256
 Supports DH/NIKE: No
 Reference: [[This document]]
 ~~~~~~~~~~~~~~~~~~~~~~~
+
+
+~~~~~~~~~~~~~~~~~~~~~~~
+Value: TBD3
+Array: 3, -43, 16, TBD12, -48, 3, -43
+Description: A256GCM, SHA-384, 16, MLKEM1024, ML-DSA-85,
+             A256GCM, SHA-384
+Supports DH/NIKE: No
+Reference: [[This document]]
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Cipher suite TBD3 is intended for for high security applications such as government use and financial applications. This cipher suites consists of algorithms from the Commercial National Security Algorithm (CNSA) 2.0 suite [CNSA2].
 
 --- back
 
