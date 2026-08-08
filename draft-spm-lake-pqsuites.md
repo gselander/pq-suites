@@ -202,7 +202,7 @@ Reference: [[This document]]
 ~~~~~~~~~~~~~~~~~~~~~~~
 Value: TBD3
 Array: 3, -43, 16, TBD12, -48, 3, -43
-Description: A256GCM, SHA-384, 16, MLKEM1024, ML-DSA-85,
+Description: A256GCM, SHA-384, 16, MLKEM1024, ML-DSA-87,
              A256GCM, SHA-384
 Supports DH/NIKE: No
 Reference: [[This document]]
