@@ -1,8 +1,8 @@
 ---
 v: 3
 
-title: Quantum-Resistant Cipher Suites for EDHOC
-abbrev: EDHOC PQC
+title: Quantum-Resistant Cipher Suites for LAKE
+abbrev: LAKE PQC
 docname: draft-spm-lake-pqsuites-latest
 category: std
 submissiontype: IETF
@@ -68,43 +68,43 @@ informative:
 
 --- abstract
 
-The Lightweight Authenticated Key Exchange (LAKE) protocol, Ephemeral Diffie-Hellman over COSE (EDHOC), achieves post-quantum security by adding new cipher suites with quantum-resistant algorithms, such as ML-DSA for digital signatures and ML-KEM for key exchange. This document specifies how EDHOC operates in a post-quantum setting using both signature-based and PSK-based authentication methods, and defines corresponding cipher suites.
+The Lightweight Authenticated Key Exchange (LAKE) protocol, also known as Ephemeral Diffie-Hellman over COSE (EDHOC), achieves post-quantum security by adding new cipher suites with quantum-resistant algorithms, such as ML-DSA for digital signatures and ML-KEM for key exchange. This document specifies how the LAKE protocol operates in a post-quantum setting using both signature-based and PSK-based authentication methods, and defines corresponding cipher suites.
 
 --- middle
 
 
 # Introduction
 
-The Lightweight Authenticated Key Exchange (LAKE) protocol, Ephemeral Diffie-Hellman over COSE (EDHOC) {{RFC9528}}, supports the use of multiple authentication methods and the negotiation of cipher suites based on COSE algorithms. Currently, four asymmetric authentication methods (0, 1, 2, and 3) are defined. In addition, a symmetric key-based authentication method is being developed, see {{I-D.ietf-lake-edhoc-psk}}.
+The Lightweight Authenticated Key Exchange (LAKE) protocol defined in {{RFC9528}}, also known as Ephemeral Diffie-Hellman over COSE (EDHOC), supports the use of multiple authentication methods and the negotiation of cipher suites based on COSE algorithms. Currently, four asymmetric authentication methods (0, 1, 2, and 3) are defined. In addition, a symmetric key-based authentication method is being developed, see {{I-D.ietf-lake-edhoc-psk}}.
 
 Currently defined cipher suites rely on Elliptic Curve Cryptography (ECC) for key exchange and authentication, making them vulnerable in the event that a Cryptographically Relevant Quantum Computer (CRQC) is constructed.
 
-This document specifies how EDHOC can operate in a post-quantum setting using both signature-based and PSK-based authentication, and defines corresponding cipher suites.
+This document specifies how the LAKE protocol can operate in a post-quantum setting using both signature-based and PSK-based authentication, and defines corresponding cipher suites. With this modification the protocol is no longer dependent on Diffie-Hellman which makes EDHOC a misnomer and we henceforth use the name LAKE for the protocol.
 
 ## Terminology # {#terminology}
 
 {::boilerplate bcp14}
 
-Readers are expected to be familiar with EDHOC {{RFC9528}}.
+Readers are expected to be familiar with {{RFC9528}}. To avoid misunderstanding of the capabilities of the protocol, the name EDHOC is replaced by LAKE. To avoid misunderstanding with terminology from {{RFC9528}}, the prefix EDHOC is retained when needed, for example in the IANA registries.
 
 
-# EDHOC with Quantum-Resistant Algorithms
+# LAKE with Quantum-Resistant Algorithms
 
 Method 0 in {{RFC9528}}, which uses digital signatures for authentication by both the Initiator and Responder, and also the PSK method in {{I-D.ietf-lake-edhoc-psk}}, is straightforward to use with standardized post-quantum algorithms.
 
-A quantum-resistant signature algorithm, such as ML-DSA {{I-D.ietf-cose-dilithium}}, is a drop-in replacement for classical signature algorithms such as ECDSA. For post-quantum secure key exchange, a quantum-resistant Key Encapsulation Mechanism (KEM), such as ML-KEM {{I-D.ietf-jose-pqc-kem}}, can be applied directly to EDHOC, as is detailed in {{KEM}}.
+A quantum-resistant signature algorithm, such as ML-DSA {{I-D.ietf-cose-dilithium}}, is a drop-in replacement for classical signature algorithms such as ECDSA. For post-quantum secure key exchange, a quantum-resistant Key Encapsulation Mechanism (KEM), such as ML-KEM {{I-D.ietf-jose-pqc-kem}}, can be applied directly to the LAKE protocol, as is detailed in {{KEM}}.
 
-To enable post-quantum security in EDHOC it suffices to register new cipher suites using COSE registered algorithms. Cipher suites using ML-KEM-512 {{I-D.ietf-jose-pqc-kem}} for key exchange and ML-DSA-44 {{I-D.ietf-cose-dilithium}} for digital signatures are specified in {{suites-registry}}. As both ML-KEM {{FIPS203}} and ML-DSA {{FIPS204}} internally use SHAKE256, it is natural to also use SHAKE256 for EDHOC's key derivation. Additional post-quantum cipher suites may be specified.
+To enable post-quantum security support for LAKE it suffices to register new cipher suites using COSE registered algorithms. Cipher suites using ML-KEM-512 {{I-D.ietf-jose-pqc-kem}} for key exchange and ML-DSA-44 {{I-D.ietf-cose-dilithium}} for digital signatures are specified in {{suites-registry}}. As both ML-KEM {{FIPS203}} and ML-DSA {{FIPS204}} internally use SHAKE256, it was natural to also use SHAKE256 for key derivation. Additional post-quantum cipher suites may be specified.
 
 Methods 1–3 in {{RFC9528}} use a Diffie-Hellman/Non-Interactive Key Exchange (NIKE) based API for authentication. As of this writing, no standardized post-quantum algorithms for these methods exist. To highlight which methods that require DH/NIKE a column is added to the EDHOC Method Type registry, see {{method-update}}. To highlight matching cipher suites a corresponding column indicating support for DH/NIKE is added, see {{suites-registry}}.
 
-An alternative path to post-quantum EDHOC, not pursued in this document, would be to define new authentication methods based on Key Encapsulation Mechanisms (KEMs).
+An alternative path to post-quantum support for the LAKE protocol, not pursued in this document, is to define new authentication methods based on Key Encapsulation Mechanisms (KEMs).
 
 Compared to elliptic curve algorithms such as ECDHE, ECDSA, and EdDSA, ML-KEM-512 and ML-DSA-44 introduce significantly higher overhead {{FIPS203}}{{FIPS204}}. More efficient post-quantum signature schemes are being standardized, such as FN-DSA.
 
-# Using KEMs in EDHOC Key Exchange {#KEM}
+# Using KEMs in the Key Exchange {#KEM}
 
-Given a quantum-resistant KEM, such as ML-KEM-512, with encapsulation key ek, ciphertext c, and shared secret key K (using the notation of {{FIPS203}}). The Diffie-Hellman procedure in EDHOC is replaced by a KEM procedure as follows:
+Given a quantum-resistant KEM, such as ML-KEM-512, with encapsulation key ek, ciphertext c, and shared secret key K (using the notation of {{FIPS203}}). The Diffie-Hellman procedure in the key exchange is replaced by a KEM procedure as follows:
 
 * The Initiator generates a new encapsulation / decapsulation key pair matching the selected cipher suite.
 
@@ -118,9 +118,9 @@ Given a quantum-resistant KEM, such as ML-KEM-512, with encapsulation key ek, ci
 
 * G_XY is the shared secret key K.
 
-The security requirements and security considerations of EDHOC and the KEM algorithm used apply. For example, the Initiator MUST generate a new encapsulation / decapsulation key pair for each EDHOC session.
+The security requirements and security considerations of {{RFC9528}} and the KEM algorithm used apply. For example, the Initiator MUST generate a new encapsulation / decapsulation key pair for LAKE session.
 
-Note that G_Y does not contain a public key when a KEM is used in this way. The definition of EDHOC message_2 in {{Section 5.3.1 of RFC9528}} remains the same:
+Note that G_Y does not contain a public key when a KEM is used in this way. The definition of LAKE message_2 in {{Section 5.3.1 of RFC9528}} remains the same:
 
 ~~~~~~~~~~~ CDDL
 message_2 = (
@@ -176,7 +176,7 @@ Value: 3, Requires DH/NIKE: Yes
 
 IANA is requested to update the EDHOC Cipher Suites registry with a column with heading "Supports DH/NIKE" indicating that the cipher suite supports Diffie-Hellman or Non-Interactive Key Exchange. Valid table entries in this column are "Yes" and "No".
 
-For the existing EDHOC Cipher Suites 0-6, 24, 25, the entry "Yes" is inserted in the new "Supports DH/NIKE" column.
+For the existing cipher suites 0-6, 24, 25, the entry "Yes" is inserted in the new "Supports DH/NIKE" column.
 
 Furthermore, IANA is requested to register the following entries in the EDHOC Cipher Suites Registry:
 
